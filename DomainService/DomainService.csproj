@@ -8,7 +8,10 @@
 
   <ItemGroup>
     <Folder Include="Dto\" />
-    <Folder Include="DbService\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.24" />
   </ItemGroup>
 
 </Project>
