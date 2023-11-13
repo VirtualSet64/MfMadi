@@ -20,7 +20,7 @@ namespace MfMadi.Common
                    issuer: Configuration["ISSUER"],
                    audience: Configuration["AUDIENCE"],
                    claims: claims,
-                   expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(600)),
+                   expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30)),
                    signingCredentials: new SigningCredentials(GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
         }
         public SymmetricSecurityKey GetSymmetricSecurityKey()

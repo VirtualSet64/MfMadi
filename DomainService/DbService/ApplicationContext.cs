@@ -14,10 +14,10 @@ namespace DomainService.DbService
         public DbSet<Employee> Employees { get; set; } = null!;
         public DbSet<Advertising> Advertisings { get; set; } = null!;
         public DbSet<Contact> Contacts { get; set; } = null!;
-        public DbSet<News> Newses { get; set; } = null!;
-        public DbSet<Content> Contents { get; set; } = null!;
+        public DbSet<News> Newses { get; set; } = null!;        
         public DbSet<MainMenu> MainMenus { get; set; } = null!;
         public DbSet<Partner> Partners { get; set; } = null!;
+        public DbSet<Content> Contents { get; set; } = null!;
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)

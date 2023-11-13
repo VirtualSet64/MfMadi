@@ -1,4 +1,5 @@
 using DomainService.DbService;
+using Infrastructure.Repository.Interfaces;
 using MfMadi.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -44,7 +45,7 @@ builder.Services.AddSwaggerGen(option =>
 });
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Anket"), providerOptions => providerOptions.EnableRetryOnFailure()));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MfMadiDb"), providerOptions => providerOptions.EnableRetryOnFailure()));
 
 
 builder.Services.AddCors(options =>
@@ -95,10 +96,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddDBService();
 
 var app = builder.Build();
 
 app.ConfigureExceptionHandler();
+
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<IEmployeeRepository>();
+    var rolesManager = scope.ServiceProvider.GetRequiredService<IRoleRepository>();
+    if (userManager.Get().ToList().Count == 0)
+    {
+        string adminLogin = builder.Configuration["AdminLogin"];
+        string password = builder.Configuration["AdminPassword"];
+        await RoleInitializer.InitializeAsync(adminLogin, password, userManager, rolesManager);
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
