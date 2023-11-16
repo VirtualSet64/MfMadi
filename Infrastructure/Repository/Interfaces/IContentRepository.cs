@@ -5,5 +5,6 @@ namespace Infrastructure.Repository.Interfaces
 {
     public interface IContentRepository : IGenericRepository<Content>
     {
+        public IQueryable<Content> GetContents();
     }
 }

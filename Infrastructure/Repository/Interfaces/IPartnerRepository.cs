@@ -5,5 +5,6 @@ namespace Infrastructure.Repository.Interfaces
 {
     public interface IPartnerRepository : IGenericRepository<Partner>
     {
+        public IQueryable<Partner> GetPartners();
     }
 }

@@ -11,5 +11,10 @@ namespace Infrastructure.Repository
         {
 
         }
+
+        public IQueryable<MainMenu> GetMainMenu()
+        {
+            return Get().Where(x => x.IsDeleted != true);
+        }
     }
 }

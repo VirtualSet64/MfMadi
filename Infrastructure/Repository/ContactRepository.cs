@@ -11,5 +11,10 @@ namespace Infrastructure.Repository
         {
 
         }
+
+        public IQueryable<Contact> GetContacts()
+        {
+            return Get().Where(x => x.IsDeleted != true);
+        }
     }
 }

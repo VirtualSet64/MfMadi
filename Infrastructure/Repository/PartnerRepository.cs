@@ -11,5 +11,10 @@ namespace Infrastructure.Repository
         {
 
         }
+
+        public IQueryable<Partner> GetPartners()
+        {
+            return Get().Where(x => x.IsDeleted != true);
+        }
     }
 }

@@ -5,5 +5,6 @@ namespace Infrastructure.Repository.Interfaces
 {
     public interface INewsRepository : IGenericRepository<News>
     {
+        public IQueryable<News> GetNews();
     }
 }

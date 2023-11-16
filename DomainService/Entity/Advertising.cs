@@ -10,5 +10,6 @@
         public string? BoldTextButtom { get; set; }
         public string? AvatarFileName { get; set; }
         public DateTime? CreateDate { get; set; } = DateTime.Now;
+        public bool IsDeleted { get; set; }
     }
 }

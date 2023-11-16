@@ -11,5 +11,10 @@ namespace Infrastructure.Repository
         {
 
         }
+
+        public IQueryable<Advertising> GetAdvertisings()
+        {
+            return Get().Where(x => x.IsDeleted != true);
+        }
     }
 }

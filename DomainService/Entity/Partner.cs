@@ -6,5 +6,7 @@
         public string? Name { get; set; }
         public string? AvatarFileName { get; set; }
         public string? Link { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? CreateDate { get; set; } = DateTime.Now;
     }
 }
