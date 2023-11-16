@@ -2,8 +2,6 @@
 {
     public enum ContentType
     {
-        Advertising,
-        News,
         Details,
         TextWithLink
     }

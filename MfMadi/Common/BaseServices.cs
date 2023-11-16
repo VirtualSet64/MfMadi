@@ -1,5 +1,7 @@
 ﻿using Infrastructure.Repository;
 using Infrastructure.Repository.Interfaces;
+using MfMadi.Services;
+using MfMadi.Services.Interfaces;
 using Microsoft.Extensions.Hosting.Internal;
 
 namespace MfMadi.Common
@@ -10,6 +12,7 @@ namespace MfMadi.Common
         {
             services.AddSingleton<AuthOptions>();
             services.AddSingleton<IHostEnvironment>(new HostingEnvironment());
+            services.AddScoped<IAddFileOnServer, AddFileOnServer>();
 
             #region Repositories
             services.AddScoped<IAdvertisingRepository, AdvertisingRepository>();

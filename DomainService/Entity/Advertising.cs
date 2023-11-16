@@ -11,5 +11,7 @@
         public string? AvatarFileName { get; set; }
         public DateTime? CreateDate { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; }
+
+        public Content? Content { get; set; }
     }
 }
