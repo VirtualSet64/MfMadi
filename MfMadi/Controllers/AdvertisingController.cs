@@ -1,5 +1,6 @@
 ﻿using DomainService.Entity;
 using Infrastructure.Repository.Interfaces;
+using MfMadi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MfMadi.Controllers
@@ -10,10 +11,12 @@ namespace MfMadi.Controllers
     {
         private readonly IAdvertisingRepository _advertisingRepository;
         private readonly IConfiguration _configuration;
+        private readonly IAddFileOnServer _addFileOnServer;
 
-        public AdvertisingController(IAdvertisingRepository advertisingRepository, IConfiguration configuration)
+        public AdvertisingController(IAdvertisingRepository advertisingRepository, IConfiguration configuration, IAddFileOnServer addFileOnServer)
         {
             _advertisingRepository = advertisingRepository;
+            _addFileOnServer = addFileOnServer;
             _configuration = configuration;
         }
 
@@ -40,18 +43,32 @@ namespace MfMadi.Controllers
 
         [Route("CreateAdvertising")]
         [HttpPost]
-        public async Task<IActionResult> CreateAdvertising(Advertising advertising)
+        public async Task<IActionResult> CreateAdvertising(Advertising advertising, IFormFile? formFile)
         {
             advertising.CreateDate = DateTime.Now;
+
+            if (formFile != null)
+            {
+                await _addFileOnServer.CreateFile(formFile);
+                advertising.AvatarFileName = formFile.FileName;
+            }
+
             await _advertisingRepository.Create(advertising);
             return Ok();
         }
 
         [Route("UpdateAdvertising")]
         [HttpPost]
-        public async Task<IActionResult> UpdateAdvertising(Advertising advertising)
+        public async Task<IActionResult> UpdateAdvertising(Advertising advertising, IFormFile? formFile)
         {
-            advertising.CreateDate = DateTime.Now;
+            advertising.UpdateDate = DateTime.Now;
+
+            if (formFile != null)
+            {
+                await _addFileOnServer.CreateFile(formFile);
+                advertising.AvatarFileName = formFile.FileName;
+            }
+
             await _advertisingRepository.Update(advertising);
             return Ok();
         }
@@ -64,6 +81,7 @@ namespace MfMadi.Controllers
             if (advertising == null)
                 return BadRequest("Объявление не найдено");
             advertising.IsDeleted = true;
+            advertising.UpdateDate = DateTime.Now;
             await _advertisingRepository.Update(advertising);
             return Ok();
         }

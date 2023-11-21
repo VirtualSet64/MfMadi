@@ -1,6 +1,8 @@
 ﻿using DomainService.Entity;
 using Infrastructure.Repository;
 using Infrastructure.Repository.Interfaces;
+using MfMadi.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MfMadi.Controllers
@@ -10,10 +12,12 @@ namespace MfMadi.Controllers
     public class PartnerController : Controller
     {
         private readonly IPartnerRepository _partnerRepository;
+        private readonly IAddFileOnServer _addFileOnServer;
 
-        public PartnerController(IPartnerRepository partnerRepository)
+        public PartnerController(IPartnerRepository partnerRepository, IAddFileOnServer addFileOnServer)
         {
             _partnerRepository = partnerRepository;
+            _addFileOnServer = addFileOnServer;
         }
 
         [Route("GetAllPartners")]
@@ -32,18 +36,32 @@ namespace MfMadi.Controllers
 
         [Route("CreatePartner")]
         [HttpPost]
-        public async Task<IActionResult> CreatePartner(Partner partner)
+        public async Task<IActionResult> CreatePartner(Partner partner, IFormFile? formFile)
         {
             partner.CreateDate = DateTime.Now;
+
+            if (formFile != null)
+            {
+                await _addFileOnServer.CreateFile(formFile);
+                partner.ImageFileName = formFile.FileName;
+            }
+
             await _partnerRepository.Create(partner);
             return Ok();
         }
 
         [Route("UpdatePartner")]
         [HttpPost]
-        public async Task<IActionResult> UpdatePartner(Partner partner)
+        public async Task<IActionResult> UpdatePartner(Partner partner, IFormFile? formFile)
         {
             partner.CreateDate = DateTime.Now;
+
+            if (formFile != null)
+            {
+                await _addFileOnServer.CreateFile(formFile);
+                partner.ImageFileName = formFile.FileName;
+            }
+
             await _partnerRepository.Update(partner);
             return Ok();
         }
