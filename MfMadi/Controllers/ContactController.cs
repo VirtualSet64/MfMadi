@@ -1,5 +1,4 @@
 ﻿using DomainService.Entity;
-using Infrastructure.Repository;
 using Infrastructure.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,7 +42,7 @@ namespace MfMadi.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateContact(Contact contact)
         {
-            contact.CreateDate = DateTime.Now;
+            contact.UpdateDate = DateTime.Now;
             await _contactRepository.Update(contact);
             return Ok();
         }
@@ -56,6 +55,7 @@ namespace MfMadi.Controllers
             if (contact == null)
                 return BadRequest("Контакт не найден");
             contact.IsDeleted = true;
+            contact.UpdateDate = DateTime.Now;
             await _contactRepository.Update(contact);
             return Ok();
         }

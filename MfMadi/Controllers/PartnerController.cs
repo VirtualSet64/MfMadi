@@ -1,8 +1,6 @@
 ﻿using DomainService.Entity;
-using Infrastructure.Repository;
 using Infrastructure.Repository.Interfaces;
 using MfMadi.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MfMadi.Controllers
@@ -54,7 +52,7 @@ namespace MfMadi.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdatePartner(Partner partner, IFormFile? formFile)
         {
-            partner.CreateDate = DateTime.Now;
+            partner.UpdateDate = DateTime.Now;
 
             if (formFile != null)
             {
@@ -74,6 +72,7 @@ namespace MfMadi.Controllers
             if (partner == null)
                 return BadRequest("Ссылка на партнера не найдена");
             partner.IsDeleted = true;
+            partner.UpdateDate = DateTime.Now;
             await _partnerRepository.Update(partner);
             return Ok();
         }

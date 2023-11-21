@@ -1,5 +1,4 @@
 ﻿using DomainService.Entity;
-using Infrastructure.Repository;
 using Infrastructure.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,7 +42,7 @@ namespace MfMadi.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateMainMenu(MainMenu mainMenu)
         {
-            mainMenu.CreateDate = DateTime.Now;
+            mainMenu.UpdateDate = DateTime.Now;
             await _mainMenuRepository.Update(mainMenu);
             return Ok();
         }
@@ -54,8 +53,9 @@ namespace MfMadi.Controllers
         {
             var mainMenu = await _mainMenuRepository.FindById(id);
             if (mainMenu == null)
-                return BadRequest("Меню не найдено");
+                return BadRequest("Пункт меню не найден");
             mainMenu.IsDeleted = true;
+            mainMenu.UpdateDate = DateTime.Now;
             await _mainMenuRepository.Update(mainMenu);
             return Ok();
         }

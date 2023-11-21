@@ -43,7 +43,7 @@ namespace MfMadi.Controllers
                 };
                 ClaimsIdentity claimsIdentity = new(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
                 if (claimsIdentity == null)
-                    return BadRequest(new { errorText = "Invalid username or password." });
+                    return BadRequest(new { errorText = "Неверно введен логин/пароль" });
 
                 // создаем JWT-токен
                 var jwt = _authOptions.GetAuthData(claimsIdentity.Claims);
@@ -56,7 +56,7 @@ namespace MfMadi.Controllers
                 };
                 return Ok(response);
             }
-            return BadRequest();
+            return BadRequest("Неверно введен логин/пароль");
         }
     }
 }

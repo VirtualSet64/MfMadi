@@ -1,5 +1,4 @@
 ﻿using DomainService.Entity;
-using Infrastructure.Repository;
 using Infrastructure.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,7 +49,7 @@ namespace MfMadi.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateNews(News news)
         {
-            news.CreateDate = DateTime.Now;
+            news.UpdateDate = DateTime.Now;
             await _newsRepository.Update(news);
             return Ok();
         }
@@ -63,6 +62,7 @@ namespace MfMadi.Controllers
             if (news == null)
                 return BadRequest("Новость не найдена");
             news.IsDeleted = true;
+            news.UpdateDate = DateTime.Now;
             await _newsRepository.Update(news);
             return Ok();
         }

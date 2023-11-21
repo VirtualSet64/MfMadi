@@ -1,5 +1,4 @@
 ﻿using DomainService.Entity;
-using Infrastructure.Repository;
 using Infrastructure.Repository.Interfaces;
 using MfMadi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -63,7 +62,7 @@ namespace MfMadi.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateContent(Content content, IFormFileCollection? formFiles)
         {
-            content.CreateDate = DateTime.Now;
+            content.UpdateDate = DateTime.Now;
 
             if (formFiles != null)
             {
@@ -91,6 +90,7 @@ namespace MfMadi.Controllers
             if (content == null)
                 return BadRequest("Контент не найден");
             content.IsDeleted = true;
+            content.UpdateDate = DateTime.Now;
             await _contentRepository.Update(content);
             return Ok();
         }
@@ -104,6 +104,8 @@ namespace MfMadi.Controllers
                 return BadRequest("Файл не найден");
             
             file.IsDeleted = true;
+            file.UpdateDate = DateTime.Now;
+            await _fileModelRepository.Update(file);
             return Ok();
         }
     }
