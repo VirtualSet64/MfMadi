@@ -1,10 +1,29 @@
-﻿namespace DomainService.Entity
+﻿using System.ComponentModel;
+using System.Xml.Serialization;
+
+namespace DomainService.Entity
 {
     public enum ContactType
     {
+        /// <summary>
+        /// Адрес
+        /// </summary>
+        [XmlAttribute("Адрес")] 
         Address,
+        /// <summary>
+        /// Номер телефона
+        /// </summary>
+        [XmlAttribute("Номер телефона")]
         PhoneNumber,
+        /// <summary>
+        /// График работы
+        /// </summary>
+        [XmlAttribute("График работы")]
         WorkShedule,
-        Reception
+        /// <summary>
+        /// Приемная
+        /// </summary>
+        [XmlAttribute("Приемная")]
+        Reception 
     }
 }

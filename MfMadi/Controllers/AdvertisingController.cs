@@ -20,6 +20,10 @@ namespace MfMadi.Controllers
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// Получение всех объявлений
+        /// </summary>
+        /// <returns></returns>
         [Route("GetAllAdvertisings")]
         [HttpGet]
         public IActionResult GetAllAdvertisings()
@@ -27,6 +31,10 @@ namespace MfMadi.Controllers
             return Ok(_advertisingRepository.Get());
         }
 
+        /// <summary>
+        /// Получение неудаленных объявлений
+        /// </summary>
+        /// <returns></returns>
         [Route("GetAdvertisings")]
         [HttpGet]
         public IActionResult GetAdvertisings()
@@ -34,6 +42,10 @@ namespace MfMadi.Controllers
             return Ok(_advertisingRepository.GetAdvertisings());
         }
 
+        /// <summary>
+        /// Получение последних двух объявлений
+        /// </summary>
+        /// <returns></returns>
         [Route("GetLastAdvertisings")]
         [HttpGet]
         public IActionResult GetLastAdvertisings()
@@ -41,34 +53,44 @@ namespace MfMadi.Controllers
             return Ok(_advertisingRepository.GetAdvertisings().OrderByDescending(x => x.CreateDate).Take(int.Parse(_configuration["CountOutputAdvertisings"])));
         }
 
-        [Route("CreateAdvertising")]
+        /// <summary>
+        /// Добавление файла к объявлению
+        /// </summary>
+        /// <param name="advertisingId"></param>
+        /// <param name="formFile"></param>
+        /// <returns></returns>
+        [Route("AddFileToAdvertising")]
         [HttpPost]
-        public async Task<IActionResult> CreateAdvertising(Advertising advertising, IFormFile? formFile)
+        public async Task<IActionResult> AddFileToAdvertising(int advertisingId, IFormFile formFile)
         {
-            advertising.CreateDate = DateTime.Now;
-
+            var advertising = await _advertisingRepository.FindById(advertisingId);
+            if (advertising == null)
+                return BadRequest("Не найдено объявление");
+            
             if (formFile != null)
             {
                 await _addFileOnServer.CreateFile(formFile);
                 advertising.AvatarFileName = formFile.FileName;
             }
+            advertising.UpdateDate = DateTime.Now; 
+            await _advertisingRepository.Update(advertising);
+            return Ok();
+        }
 
+        [Route("CreateAdvertising")]
+        [HttpPost]
+        public async Task<IActionResult> CreateAdvertising(Advertising advertising)
+        {
+            advertising.CreateDate = DateTime.Now;
             await _advertisingRepository.Create(advertising);
             return Ok();
         }
 
         [Route("UpdateAdvertising")]
         [HttpPost]
-        public async Task<IActionResult> UpdateAdvertising(Advertising advertising, IFormFile? formFile)
+        public async Task<IActionResult> UpdateAdvertising(Advertising advertising)
         {
             advertising.UpdateDate = DateTime.Now;
-
-            if (formFile != null)
-            {
-                await _addFileOnServer.CreateFile(formFile);
-                advertising.AvatarFileName = formFile.FileName;
-            }
-
             await _advertisingRepository.Update(advertising);
             return Ok();
         }

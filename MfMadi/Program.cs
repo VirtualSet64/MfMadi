@@ -1,23 +1,50 @@
 using DomainService.DbService;
 using Infrastructure.Repository.Interfaces;
 using MfMadi.Common;
+using MfMadi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Converters;
 using Sentry;
+using System.IO;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+{
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(option =>
 {
+    var basePath = AppContext.BaseDirectory;
+
+    var MfMadi = Path.Combine(basePath, "MfMadi.xml");
+    var DomainMfMadi = Path.Combine(basePath, "DomainMfMadi.xml");
+    var InfMfMadi = Path.Combine(basePath, "InfMfMadi.xml");
+    List<string> docFiles = new()
+    {
+        MfMadi,
+        DomainMfMadi,
+        InfMfMadi
+    };
+
+    foreach (var item in docFiles)
+    {
+        option.IncludeXmlComments(item);        
+    }
+
+    option.SchemaFilter<EnumTypesSchemaFilter>(DomainMfMadi);
+
     option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
     option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -121,9 +148,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("MyAllowCredentialsPolicy");
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
-app.UseHttpsRedirection();
+app.UseCors("MyAllowCredentialsPolicy");
 
 app.UseAuthorization();
 

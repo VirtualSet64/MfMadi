@@ -1,6 +1,5 @@
 ﻿using DomainService.Entity;
 using Infrastructure.Repository.Interfaces;
-using MfMadi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MfMadi.Controllers
@@ -10,14 +9,10 @@ namespace MfMadi.Controllers
     public class ContentController : Controller
     {
         private readonly IContentRepository _contentRepository;
-        private readonly IAddFileOnServer _addFileOnServer;
-        private readonly IFileModelRepository _fileModelRepository;
 
-        public ContentController(IContentRepository contentRepository, IAddFileOnServer addFileOnServer, IFileModelRepository fileModelRepository)
+        public ContentController(IContentRepository contentRepository)
         {
             _contentRepository = contentRepository;
-            _addFileOnServer = addFileOnServer;
-            _fileModelRepository = fileModelRepository;
         }
 
         [Route("GetAllContents")]
@@ -36,48 +31,18 @@ namespace MfMadi.Controllers
 
         [Route("CreateContent")]
         [HttpPost]
-        public async Task<IActionResult> CreateContent(Content content, IFormFileCollection? formFiles)
+        public async Task<IActionResult> CreateContent(Content content)
         {
             content.CreateDate = DateTime.Now;
-
-            if (formFiles != null)
-            {
-                List<FileModel> fileModels = new();
-                foreach (var file in formFiles)
-                {
-                    await _addFileOnServer.CreateFile(file);
-                    fileModels.Add(new FileModel()
-                    {
-                        Name = file.FileName
-                    });
-
-                }
-                content.FileModels = fileModels;
-            }
             await _contentRepository.Create(content);
             return Ok();
         }
 
         [Route("UpdateContent")]
         [HttpPost]
-        public async Task<IActionResult> UpdateContent(Content content, IFormFileCollection? formFiles)
+        public async Task<IActionResult> UpdateContent(Content content)
         {
             content.UpdateDate = DateTime.Now;
-
-            if (formFiles != null)
-            {
-                List<FileModel> fileModels = new();
-                foreach (var file in formFiles)
-                {
-                    await _addFileOnServer.CreateFile(file);
-                    fileModels.Add(new FileModel()
-                    {
-                        Name = file.FileName
-                    });
-
-                }
-                content.FileModels = fileModels;
-            }
             await _contentRepository.Update(content);
             return Ok();
         }
@@ -92,20 +57,6 @@ namespace MfMadi.Controllers
             content.IsDeleted = true;
             content.UpdateDate = DateTime.Now;
             await _contentRepository.Update(content);
-            return Ok();
-        }
-
-        [Route("DeleteFile")]
-        [HttpPost]
-        public async Task<IActionResult> DeleteFile(int id)
-        {
-            var file = await _fileModelRepository.FindById(id);
-            if (file == null)
-                return BadRequest("Файл не найден");
-            
-            file.IsDeleted = true;
-            file.UpdateDate = DateTime.Now;
-            await _fileModelRepository.Update(file);
             return Ok();
         }
     }

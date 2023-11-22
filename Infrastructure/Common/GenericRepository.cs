@@ -35,6 +35,13 @@ namespace Infrastructure.Common
             await _context.SaveChangesAsync();
         }
 
+        public async Task CreateRange(List<TEntity> listItems)
+        {
+            foreach (var item in listItems)
+                await _dbSet.AddAsync(item);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task Update(TEntity item)
         {
             _context.Entry(item).State = EntityState.Modified;

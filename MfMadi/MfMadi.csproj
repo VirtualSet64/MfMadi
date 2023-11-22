@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>1778b2cc-0d02-42da-8bf9-ad619e36a73b</UserSecretsId>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>C:\Users\programmsit\source\repos\MfMadi\MfMadi\bin\Debug\net6.0\MfMadi.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +20,14 @@
   <ItemGroup>
     <ProjectReference Include="..\DomainService\DomainService.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Files\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
 </Project>

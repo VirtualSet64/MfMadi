@@ -4,6 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>C:\Users\programmsit\source\repos\MfMadi\MfMadi\bin\Debug\net6.0\InfMfMadi.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

@@ -32,34 +32,43 @@ namespace MfMadi.Controllers
             return Ok(_partnerRepository.GetPartners());
         }
 
+        /// <summary>
+        /// Создание партнера
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="link"></param>
+        /// <param name="formFile"></param>
+        /// <returns></returns>
         [Route("CreatePartner")]
         [HttpPost]
-        public async Task<IActionResult> CreatePartner(Partner partner, IFormFile? formFile)
+        public async Task<IActionResult> CreatePartner(string name, string link, IFormFile? formFile)
         {
-            partner.CreateDate = DateTime.Now;
-
+            var partner = new Partner()
+            {
+                Name = name,
+                Link = link,
+            };
             if (formFile != null)
             {
                 await _addFileOnServer.CreateFile(formFile);
                 partner.ImageFileName = formFile.FileName;
             }
-
             await _partnerRepository.Create(partner);
             return Ok();
         }
 
         [Route("UpdatePartner")]
         [HttpPost]
-        public async Task<IActionResult> UpdatePartner(Partner partner, IFormFile? formFile)
+        public async Task<IActionResult> UpdatePartner(int partnerId, string name, string link, IFormFile? formFile)
         {
-            partner.UpdateDate = DateTime.Now;
-
+            var partner = await _partnerRepository.FindById(partnerId);
+            partner.Name = name;
+            partner.Link = link;
             if (formFile != null)
             {
                 await _addFileOnServer.CreateFile(formFile);
                 partner.ImageFileName = formFile.FileName;
             }
-
             await _partnerRepository.Update(partner);
             return Ok();
         }

@@ -3,6 +3,7 @@
     public interface IGenericRepository<TEntity> where TEntity : class
     {
         public Task Create(TEntity item);
+        public Task CreateRange(List<TEntity> listItems);
         public Task<TEntity?> FindById(int id);
         public IQueryable<TEntity> Get();
         public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate);
