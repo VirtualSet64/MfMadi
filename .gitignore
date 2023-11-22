@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /MfMadi/appsettings.json
 /MfMadi/appsettings.Development.json
+/.editorconfig
+/MfMadi/Files
