@@ -2,6 +2,7 @@
 using DomainService.Entity;
 using Infrastructure.Common;
 using Infrastructure.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
 {
@@ -14,7 +15,7 @@ namespace Infrastructure.Repository
 
         public IQueryable<Content> GetContents()
         {
-            return Get().Where(x => x.IsDeleted != true);
+            return Get().Include(x => x.FileModels).Where(x => x.IsDeleted != true);
         }
     }
 }

@@ -29,6 +29,13 @@ namespace MfMadi.Controllers
             return Ok(_newsRepository.GetNews());
         }
 
+        [Route("GetNewsById")]
+        [HttpGet]
+        public IActionResult GetNewsById(int newsId)
+        {
+            return Ok(_newsRepository.GetNewsById(newsId));
+        }
+
         [Route("GetNewsWithFirstImage")]
         [HttpGet]
         public IActionResult GetNewsWithFirstImage()

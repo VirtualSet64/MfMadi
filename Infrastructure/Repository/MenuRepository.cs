@@ -2,6 +2,7 @@
 using DomainService.Entity;
 using Infrastructure.Common;
 using Infrastructure.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
 {
@@ -15,6 +16,11 @@ namespace Infrastructure.Repository
         public IQueryable<Menu> GetMenu()
         {
             return Get().Where(x => x.IsDeleted != true);
+        }
+
+        public Menu GetMenuById(int menuId)
+        {
+            return Get().Include(x => x.Content).ThenInclude(x => x.FileModels).FirstOrDefault(x => x.Id == menuId);
         }
     }
 }

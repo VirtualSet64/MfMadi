@@ -2,6 +2,7 @@
 using DomainService.Entity;
 using Infrastructure.Common;
 using Infrastructure.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
 {
@@ -15,6 +16,11 @@ namespace Infrastructure.Repository
         public IQueryable<Advertising> GetAdvertisings()
         {
             return Get().Where(x => x.IsDeleted != true);
+        }
+
+        public Advertising GetAdvertisingById(int advertisingId)
+        {
+            return Get().Include(x => x.Content).FirstOrDefault(x => x.Id == advertisingId);
         }
     }
 }

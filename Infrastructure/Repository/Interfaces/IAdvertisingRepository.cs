@@ -6,5 +6,6 @@ namespace Infrastructure.Repository.Interfaces
     public interface IAdvertisingRepository : IGenericRepository<Advertising>
     {
         public IQueryable<Advertising> GetAdvertisings();
+        public Advertising GetAdvertisingById(int advertisingId);
     }
 }

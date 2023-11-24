@@ -2,6 +2,7 @@
 using DomainService.Entity;
 using Infrastructure.Common;
 using Infrastructure.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
 {
@@ -14,7 +15,12 @@ namespace Infrastructure.Repository
 
         public IQueryable<MainMenu> GetMainMenu()
         {
-            return Get().Where(x => x.IsDeleted != true);
+            return Get().Include(x=>x.ChildMenu).Where(x => x.IsDeleted != true);
+        }
+
+        public MainMenu GetMainMenuById(int mainMenuId)
+        {
+            return Get().Include(x => x.ChildMenu).FirstOrDefault(x => x.Id == mainMenuId);
         }
     }
 }

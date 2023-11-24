@@ -29,6 +29,13 @@ namespace MfMadi.Controllers
             return Ok(_menuRepository.GetMenu());
         }
 
+        [Route("GetMenuById")]
+        [HttpGet]
+        public IActionResult GetMenuById(int menuId)
+        {
+            return Ok(_menuRepository.GetMenuById(menuId));
+        }
+
         [Route("CreateMenu")]
         [HttpPost]
         public async Task<IActionResult> CreateMenu(Menu menu)

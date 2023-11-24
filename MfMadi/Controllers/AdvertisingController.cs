@@ -1,4 +1,5 @@
 ﻿using DomainService.Entity;
+using Infrastructure.Repository;
 using Infrastructure.Repository.Interfaces;
 using MfMadi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -51,6 +52,13 @@ namespace MfMadi.Controllers
         public IActionResult GetLastAdvertisings()
         {
             return Ok(_advertisingRepository.GetAdvertisings().OrderByDescending(x => x.CreateDate).Take(int.Parse(_configuration["CountOutputAdvertisings"])));
+        }
+
+        [Route("GetAdvertisingById")]
+        [HttpGet]
+        public IActionResult GetAdvertisingById(int advertisingId)
+        {
+            return Ok(_advertisingRepository.GetAdvertisingById(advertisingId));
         }
 
         /// <summary>

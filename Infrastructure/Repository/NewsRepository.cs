@@ -16,12 +16,17 @@ namespace Infrastructure.Repository
 
         public IQueryable<News> GetNews()
         {
-            return Get().Where(x => x.IsDeleted != true).Include(x => x.Content.FileModels);
+            return Get().Where(x => x.IsDeleted != true).Include(x => x.Content).ThenInclude(x=>x.FileModels);
+        }
+
+        public News GetNewsById(int newsId)
+        {
+            return Get().Include(x => x.Content).ThenInclude(x => x.FileModels).FirstOrDefault(x => x.Id == newsId);
         }
 
         public List<NewsWithMainImage> GetNewsWithFirstImage()
         {
-            var news = Get().Where(x => x.IsDeleted != true).Include(x => x.Content.FileModels).ToList();
+            var news = GetNews();
 
             List<NewsWithMainImage> newsWithMainImage = new();
             foreach (var item in news)
