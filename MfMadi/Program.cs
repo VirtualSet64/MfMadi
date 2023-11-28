@@ -4,13 +4,9 @@ using MfMadi.Common;
 using MfMadi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json.Converters;
 using Sentry;
-using System.IO;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
