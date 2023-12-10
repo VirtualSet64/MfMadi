@@ -14,9 +14,12 @@ namespace Infrastructure.Repository
 
         }
 
-        public IQueryable<News> GetNews()
+        public IQueryable<News> GetNews(int? take = null)
         {
-            return Get().Where(x => x.IsDeleted != true).Include(x => x.Content).ThenInclude(x=>x.FileModels);
+            var news = Get().Where(x => x.IsDeleted != true).Include(x => x.Content).ThenInclude(x => x.FileModels).OrderByDescending(x => x.CreateDate).AsQueryable();
+            if (take != null)
+                news = news.Take((int)take);
+            return news;
         }
 
         public News GetNewsById(int newsId)

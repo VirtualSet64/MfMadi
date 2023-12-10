@@ -24,9 +24,9 @@ namespace MfMadi.Controllers
 
         [Route("GetNews")]
         [HttpGet]
-        public IActionResult GetNews()
+        public IActionResult GetNews(int? take = null)
         {
-            return Ok(_newsRepository.GetNews());
+            return Ok(_newsRepository.GetNews(take));
         }
 
         [Route("GetNewsById")]
@@ -48,8 +48,8 @@ namespace MfMadi.Controllers
         public async Task<IActionResult> CreateNews(News news)
         {
             news.CreateDate = DateTime.Now;
-            await _newsRepository.Create(news);
-            return Ok();
+            await _newsRepository.CreateAndReturn(news);
+            return Ok(news);
         }
 
         [Route("UpdateNews")]

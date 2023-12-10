@@ -35,6 +35,13 @@ namespace Infrastructure.Common
             await _context.SaveChangesAsync();
         }
 
+        public async Task<TEntity> CreateAndReturn(TEntity item)
+        {
+            await _dbSet.AddAsync(item);
+            await _context.SaveChangesAsync();
+            return item;
+        }
+
         public async Task CreateRange(List<TEntity> listItems)
         {
             foreach (var item in listItems)
