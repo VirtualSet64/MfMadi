@@ -12,5 +12,6 @@
         public Task Remove(TEntity item);
         public Task RemoveRange(IEnumerable<TEntity> items);
         public Task Update(TEntity item);
+        public Task<TEntity> UpdateAndReturn(TEntity item);
     }
 }

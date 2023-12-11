@@ -55,6 +55,13 @@ namespace Infrastructure.Common
             await _context.SaveChangesAsync();
         }
 
+        public async Task<TEntity> UpdateAndReturn(TEntity item)
+        {
+            _context.Entry(item).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return item;
+        }
+
         public async Task Remove(TEntity item)
         {
             _dbSet.Remove(item);

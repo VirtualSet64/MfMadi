@@ -48,7 +48,7 @@ namespace MfMadi.Controllers
         public async Task<IActionResult> CreateNews(News news)
         {
             news.CreateDate = DateTime.Now;
-            await _newsRepository.CreateAndReturn(news);
+            await _newsRepository.Create(news);
             return Ok(news);
         }
 
@@ -58,7 +58,7 @@ namespace MfMadi.Controllers
         {
             news.UpdateDate = DateTime.Now;
             await _newsRepository.Update(news);
-            return Ok();
+            return Ok(news);
         }
 
         [Route("DeleteNews")]
