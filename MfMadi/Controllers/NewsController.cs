@@ -36,13 +36,6 @@ namespace MfMadi.Controllers
             return Ok(_newsRepository.GetNewsById(newsId));
         }
 
-        [Route("GetNewsWithFirstImage")]
-        [HttpGet]
-        public IActionResult GetNewsWithFirstImage()
-        {
-            return Ok(_newsRepository.GetNewsWithFirstImage());
-        }
-
         [Route("CreateNews")]
         [HttpPost]
         public async Task<IActionResult> CreateNews(News news)

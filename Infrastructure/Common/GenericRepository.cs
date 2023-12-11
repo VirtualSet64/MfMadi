@@ -35,13 +35,6 @@ namespace Infrastructure.Common
             await _context.SaveChangesAsync();
         }
 
-        public async Task<TEntity> CreateAndReturn(TEntity item)
-        {
-            await _dbSet.AddAsync(item);
-            await _context.SaveChangesAsync();
-            return item;
-        }
-
         public async Task CreateRange(List<TEntity> listItems)
         {
             foreach (var item in listItems)
@@ -51,15 +44,14 @@ namespace Infrastructure.Common
 
         public async Task Update(TEntity item)
         {
-            _context.Entry(item).State = EntityState.Modified;
+            _context.Update(item);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<TEntity> UpdateAndReturn(TEntity item)
+        public async Task UpdateEntity(TEntity item)
         {
             _context.Entry(item).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return item;
         }
 
         public async Task Remove(TEntity item)

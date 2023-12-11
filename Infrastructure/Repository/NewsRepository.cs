@@ -28,21 +28,5 @@ namespace Infrastructure.Repository
         {
             return Get().Include(x => x.Content).ThenInclude(x => x.FileModels).FirstOrDefault(x => x.Id == newsId);
         }
-
-        public List<NewsWithMainImage> GetNewsWithFirstImage()
-        {
-            var news = GetNews();
-
-            List<NewsWithMainImage> newsWithMainImage = new();
-            foreach (var item in news)
-            {
-                newsWithMainImage.Add(new NewsWithMainImage()
-                {
-                    News = item,
-                    Image = item.Content?.FileModels?.First().Name
-                });
-            }
-            return newsWithMainImage;
-        }
     }
 }

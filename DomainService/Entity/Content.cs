@@ -31,5 +31,6 @@
         /// Id родительского объекта
         /// </summary>
         public int? ParentId { get; set; }
+        public int? NewsId { get; set; }
     }
 }

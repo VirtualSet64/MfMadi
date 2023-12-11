@@ -8,6 +8,5 @@ namespace Infrastructure.Repository.Interfaces
     {
         public IQueryable<News> GetNews(int? skip = null, int ? take = null);
         public News GetNewsById(int newsId);
-        public List<NewsWithMainImage> GetNewsWithFirstImage();
     }
 }
