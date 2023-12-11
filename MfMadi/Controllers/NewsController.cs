@@ -24,9 +24,9 @@ namespace MfMadi.Controllers
 
         [Route("GetNews")]
         [HttpGet]
-        public IActionResult GetNews(int? take = null)
+        public IActionResult GetNews(int? skip = null, int? take = null)
         {
-            return Ok(_newsRepository.GetNews(take));
+            return Ok(_newsRepository.GetNews(skip, take));
         }
 
         [Route("GetNewsById")]
