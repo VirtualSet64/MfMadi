@@ -1,6 +1,7 @@
 ﻿using DomainService.Entity;
 using Infrastructure.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MfMadi.Controllers
 {
@@ -19,7 +20,7 @@ namespace MfMadi.Controllers
         [HttpGet]
         public IActionResult GetAllContents()
         {
-            return Ok(_contentRepository.Get());
+            return Ok(_contentRepository.Get().Include(x => x.ParentContent));
         }
 
         [Route("GetContents")]

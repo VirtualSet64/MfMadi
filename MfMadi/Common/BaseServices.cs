@@ -19,7 +19,9 @@ namespace MfMadi.Common
             services.AddScoped<IContactRepository, ContactRepository>();
             services.AddScoped<IContentRepository, ContentRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IFileModelRepository, FileModelRepository>();
             services.AddScoped<IMainMenuRepository, MainMenuRepository>();
+            services.AddScoped<IMenuRepository, MenuRepository>();
             services.AddScoped<INewsRepository, NewsRepository>();
             services.AddScoped<IPartnerRepository, PartnerRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();

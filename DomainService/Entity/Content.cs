@@ -30,7 +30,9 @@
         /// <summary>
         /// Id родительского объекта
         /// </summary>
-        public int? ParentId { get; set; }
+        public int? ParentContentId { get; set; }
+        public Content? ParentContent { get; set; }
         public int? NewsId { get; set; }
+        public int? AdvertisingId { get; set; }
     }
 }

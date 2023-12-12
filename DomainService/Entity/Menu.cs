@@ -10,6 +10,6 @@
         public DateTime? UpdateDate { get; set; }
 
         public Content? Content { get; set; }
-        public int? ParentId { get; set; }
+        public int? MainMenuId { get; set; }
     }
 }
