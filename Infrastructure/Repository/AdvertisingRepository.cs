@@ -15,7 +15,7 @@ namespace Infrastructure.Repository
 
         public IQueryable<Advertising> GetAdvertisings()
         {
-            return Get().Include(x => x.Content).Where(x => x.IsDeleted != true && x.Content != null & x.Content.IsDeleted != true).OrderByDescending(x => x.CreateDate);
+            return Get().Include(x => x.Content).Where(x => x.IsDeleted != true && (x.Content == null || (x.Content != null && x.Content.IsDeleted != true))).OrderByDescending(x => x.CreateDate);
         }
 
         public Advertising GetAdvertisingById(int advertisingId)

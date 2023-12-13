@@ -16,7 +16,7 @@ namespace Infrastructure.Repository
         public IQueryable<News> GetNews(int? skip = null, int? take = null)
         {
             var news = Get().Include(x => x.Content).ThenInclude(x => x.FileModels.Where(c => c.IsDeleted != true))
-                            .Where(x => x.IsDeleted != true && x.Content != null && x.Content.IsDeleted != true)
+                            .Where(x => x.IsDeleted != true && (x.Content == null || (x.Content != null && x.Content.IsDeleted != true)))
                             .OrderByDescending(x => x.CreateDate).AsQueryable();
             if (take != null)
                 news = news.Take((int)take);

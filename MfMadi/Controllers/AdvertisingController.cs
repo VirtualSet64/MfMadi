@@ -51,6 +51,9 @@ namespace MfMadi.Controllers
         [HttpGet]
         public IActionResult GetLastAdvertisings()
         {
+            var dds = _advertisingRepository.GetAdvertisings().OrderByDescending(x => x.CreateDate);
+            var sdd = int.Parse(_configuration["CountOutputAdvertisings"]);
+            var dsa = dds.Take(sdd);
             return Ok(_advertisingRepository.GetAdvertisings().OrderByDescending(x => x.CreateDate).Take(int.Parse(_configuration["CountOutputAdvertisings"])));
         }
 
