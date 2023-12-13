@@ -91,7 +91,7 @@ namespace MfMadi.Controllers
         {
             advertising.CreateDate = DateTime.Now;
             await _advertisingRepository.Create(advertising);
-            return Ok();
+            return Ok(advertising);
         }
 
         [Route("UpdateAdvertising")]
