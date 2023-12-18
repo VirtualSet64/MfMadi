@@ -13,6 +13,11 @@ namespace DomainService.Entity
         /// Текст со ссылкой
         /// </summary>
         [XmlAttribute("Текст со ссылкой")]
-        TextWithLink
+        TextWithLink,
+        /// <summary>
+        /// Контакты
+        /// </summary>
+        [XmlAttribute("Контакты")]
+        Contacts
     }
 }
