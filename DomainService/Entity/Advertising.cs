@@ -36,7 +36,12 @@
         /// Должно ли отображаться объявление на главном слайдере на главной странице
         /// </summary>
         public bool? MainSliderIsVisible { get; set; }
-        public bool IsDeleted { get; set; }
+        /// <summary>
+        /// Отвечает за показ объявления в нижней части главной страницы
+        /// Не должен появляться в других частях сайта
+        /// </summary>
+        public bool? MainPageDownIsVisible { get; set; }
+        public bool? IsDeleted { get; set; }
 
         public Content? Content { get; set; }
     }

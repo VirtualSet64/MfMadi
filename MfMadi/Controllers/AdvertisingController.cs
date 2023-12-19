@@ -44,6 +44,20 @@ namespace MfMadi.Controllers
         }
 
         /// <summary>
+        /// Получение объявления в нижней части главной страницы
+        /// </summary>
+        /// <returns></returns>
+        [Route("GetMainPageDownAdvertising")]
+        [HttpGet]
+        public IActionResult GetMainPageDownAdvertising()
+        {
+            var advertising = _advertisingRepository.Get().FirstOrDefault(x => x.IsDeleted != true && x.MainPageDownIsVisible == true);
+            if (advertising == null)
+                return BadRequest("Не найдено объявление для нижней части главной страницы");
+            return Ok(_advertisingRepository.Get().FirstOrDefault(x => x.IsDeleted != true && x.MainPageDownIsVisible == true));
+        }
+
+        /// <summary>
         /// Получение последних двух объявлений
         /// </summary>
         /// <returns></returns>
@@ -51,12 +65,13 @@ namespace MfMadi.Controllers
         [HttpGet]
         public IActionResult GetLastAdvertisings()
         {
-            var dds = _advertisingRepository.GetAdvertisings().OrderByDescending(x => x.CreateDate);
-            var sdd = int.Parse(_configuration["CountOutputAdvertisings"]);
-            var dsa = dds.Take(sdd);
             return Ok(_advertisingRepository.GetAdvertisings().OrderByDescending(x => x.CreateDate).Take(int.Parse(_configuration["CountOutputAdvertisings"])));
         }
 
+        /// <summary>
+        /// Получение объявления по Id
+        /// </summary>
+        /// <returns></returns>
         [Route("GetAdvertisingById")]
         [HttpGet]
         public IActionResult GetAdvertisingById(int advertisingId)

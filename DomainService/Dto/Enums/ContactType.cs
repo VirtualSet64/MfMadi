@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace DomainService.Entity
+namespace DomainService.Dto.Enums
 {
     public enum ContactType
     {
         /// <summary>
         /// Адрес
         /// </summary>
-        [XmlAttribute("Адрес")] 
+        [XmlAttribute("Адрес")]
         Address,
         /// <summary>
         /// Номер телефона
@@ -24,6 +24,6 @@ namespace DomainService.Entity
         /// Приемная
         /// </summary>
         [XmlAttribute("Приемная")]
-        Reception 
+        Reception
     }
 }

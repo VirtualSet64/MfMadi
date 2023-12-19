@@ -1,4 +1,6 @@
-﻿namespace DomainService.Entity
+﻿using DomainService.Dto.Enums;
+
+namespace DomainService.Entity
 {
     /// <summary>
     /// Контактная информация

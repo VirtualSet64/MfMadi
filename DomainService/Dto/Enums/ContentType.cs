@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace DomainService.Entity
+namespace DomainService.Dto.Enums
 {
     public enum ContentType
     {
