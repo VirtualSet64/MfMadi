@@ -17,11 +17,11 @@ namespace Infrastructure.Repository
         {
             var news = Get().Include(x => x.Content).ThenInclude(x => x.FileModels.Where(c => c.IsDeleted != true))
                             .Where(x => x.IsDeleted != true && (x.Content == null || (x.Content != null && x.Content.IsDeleted != true)))
-                            .OrderByDescending(x => x.CreateDate).AsQueryable();
-            if (take != null)
-                news = news.Take((int)take);
+                            .OrderByDescending(x => x.CreateDate).AsQueryable();            
             if (skip != null)
                 news = news.Skip((int)skip);
+            if (take != null)
+                news = news.Take((int)take);
             return news;
         }
 
