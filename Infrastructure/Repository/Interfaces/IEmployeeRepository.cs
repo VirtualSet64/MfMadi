@@ -5,5 +5,6 @@ namespace Infrastructure.Repository.Interfaces
 {
     public interface IEmployeeRepository : IGenericRepository<Employee>
     {
+        public IQueryable<Employee> GetEmployees();
     }
 }

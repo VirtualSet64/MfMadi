@@ -1,5 +1,4 @@
 ﻿using DomainService.Entity;
-using Infrastructure.Repository;
 using Infrastructure.Repository.Interfaces;
 using MfMadi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -43,6 +42,13 @@ namespace MfMadi.Controllers
             return Ok(_advertisingRepository.GetAdvertisings());
         }
 
+        [Route("GetAdvertisingById")]
+        [HttpGet]
+        public IActionResult GetAdvertisingById(int advertisingId)
+        {
+            return Ok(_advertisingRepository.GetAdvertisings().FirstOrDefault(x=>x.Id == advertisingId));
+        }
+
         /// <summary>
         /// Получение объявления в нижней части главной страницы
         /// </summary>
@@ -54,7 +60,7 @@ namespace MfMadi.Controllers
             var advertising = _advertisingRepository.Get().FirstOrDefault(x => x.IsDeleted != true && x.MainPageDownIsVisible == true);
             if (advertising == null)
                 return BadRequest("Не найдено объявление для нижней части главной страницы");
-            return Ok(_advertisingRepository.Get().FirstOrDefault(x => x.IsDeleted != true && x.MainPageDownIsVisible == true));
+            return Ok(advertising);
         }
 
         /// <summary>
@@ -66,17 +72,6 @@ namespace MfMadi.Controllers
         public IActionResult GetLastAdvertisings()
         {
             return Ok(_advertisingRepository.GetAdvertisings().OrderByDescending(x => x.CreateDate).Take(int.Parse(_configuration["CountOutputAdvertisings"])));
-        }
-
-        /// <summary>
-        /// Получение объявления по Id
-        /// </summary>
-        /// <returns></returns>
-        [Route("GetAdvertisingById")]
-        [HttpGet]
-        public IActionResult GetAdvertisingById(int advertisingId)
-        {
-            return Ok(_advertisingRepository.GetAdvertisingById(advertisingId));
         }
 
         /// <summary>

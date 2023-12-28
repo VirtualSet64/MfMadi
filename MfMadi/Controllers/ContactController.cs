@@ -29,6 +29,13 @@ namespace MfMadi.Controllers
             return Ok(_contactRepository.GetContacts());
         }
 
+        [Route("GetContactById")]
+        [HttpGet]
+        public IActionResult GetContactById(int contactId)
+        {
+            return Ok(_contactRepository.GetContacts().FirstOrDefault(x=>x.Id == contactId));
+        }
+
         [Route("CreateContact")]
         [HttpPost]
         public async Task<IActionResult> CreateContact(Contact contact)

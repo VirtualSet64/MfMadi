@@ -17,10 +17,5 @@ namespace Infrastructure.Repository
         {
             return Get().Include(x => x.Content).Where(x => x.IsDeleted != true && x.MainPageDownIsVisible != true && (x.Content == null || (x.Content != null && x.Content.IsDeleted != true))).OrderByDescending(x => x.CreateDate);
         }
-
-        public Advertising GetAdvertisingById(int advertisingId)
-        {
-            return GetAdvertisings().FirstOrDefault(x => x.Id == advertisingId);
-        }
     }
 }

@@ -30,6 +30,13 @@ namespace MfMadi.Controllers
             return Ok(_contentRepository.GetContents());
         }
 
+        [Route("GetContentById")]
+        [HttpGet]
+        public IActionResult GetContentById(int contentId)
+        {
+            return Ok(_contentRepository.GetContents().FirstOrDefault(x=>x.Id == contentId));
+        }
+
         [Route("CreateContent")]
         [HttpPost]
         public async Task<IActionResult> CreateContent(Content content)

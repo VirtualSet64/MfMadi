@@ -32,6 +32,13 @@ namespace MfMadi.Controllers
             return Ok(_partnerRepository.GetPartners());
         }
 
+        [Route("GetPartnerById")]
+        [HttpGet]
+        public IActionResult GetPartnerById(int partnerId)
+        {
+            return Ok(_partnerRepository.GetPartners().FirstOrDefault(x=>x.Id == partnerId));
+        }
+
         /// <summary>
         /// Создание партнера
         /// </summary>

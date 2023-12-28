@@ -17,12 +17,18 @@ namespace MfMadi.Controllers
             _employeeRepository = employeeRepository;
         }
 
-
         [Route("GetEmployees")]
         [HttpGet]
         public IActionResult GetEmployees()
         {
             return Ok(_employeeRepository.Get().Include(x => x.Role));
+        }
+
+        [Route("GetEmployeeById")]
+        [HttpGet]
+        public IActionResult GetEmployeeById(int employeeId)
+        {
+            return Ok(_employeeRepository.GetEmployees().FirstOrDefault(x=>x.Id == employeeId));
         }
 
         [Route("CreateUser")]
@@ -51,7 +57,7 @@ namespace MfMadi.Controllers
         {
             if (ModelState.IsValid)
             {
-                Employee? employee = _employeeRepository.Get().FirstOrDefault(x => x.Id == model.Id);
+                Employee? employee = _employeeRepository.GetEmployees().FirstOrDefault(x => x.Id == model.Id);
                 if (employee != null)
                 {
                     employee.Name = model.Login;
@@ -67,9 +73,9 @@ namespace MfMadi.Controllers
 
         [Route("DeleteUser")]
         [HttpPost]
-        public async Task<ActionResult> DeleteEmployee(string id)
+        public async Task<ActionResult> DeleteEmployee(int id)
         {
-            Employee? employee = _employeeRepository.Get().FirstOrDefault(c => c.Id.ToString() == id);
+            Employee? employee = await _employeeRepository.FindById(id);
             if (employee == null)
                 return BadRequest("Пользователь не найден");
 
