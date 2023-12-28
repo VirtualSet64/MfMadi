@@ -43,7 +43,7 @@ namespace MfMadi.Controllers
         {
             content.CreateDate = DateTime.Now;
             await _contentRepository.Create(content);
-            return Ok();
+            return Ok(content);
         }
 
         [Route("UpdateContent")]
