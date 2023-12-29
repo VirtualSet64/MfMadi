@@ -17,6 +17,10 @@ namespace DomainService.Entity
         /// </summary>
         public string? Value{ get; set; }
         public ContactType? ContactType { get; set; }
+        /// <summary>
+        /// Флаг отображающий контакт в строчке вверху главной страницы
+        /// </summary>
+        public bool? IsTopMainPageVisible { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime? CreateDate { get; set; } = DateTime.Now;
         public DateTime? UpdateDate { get; set; }

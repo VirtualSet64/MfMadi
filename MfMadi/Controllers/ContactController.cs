@@ -29,11 +29,18 @@ namespace MfMadi.Controllers
             return Ok(_contactRepository.GetContacts());
         }
 
+        [Route("GetContactsForLineOnMainPage")]
+        [HttpGet]
+        public IActionResult GetContactsForLineOnMainPage()
+        {
+            return Ok(_contactRepository.GetContacts().Where(x => x.IsTopMainPageVisible == true));
+        }
+
         [Route("GetContactById")]
         [HttpGet]
         public IActionResult GetContactById(int contactId)
         {
-            return Ok(_contactRepository.GetContacts().FirstOrDefault(x=>x.Id == contactId));
+            return Ok(_contactRepository.GetContacts().FirstOrDefault(x => x.Id == contactId));
         }
 
         [Route("CreateContact")]
