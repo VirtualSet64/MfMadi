@@ -15,7 +15,7 @@ namespace Infrastructure.Repository
 
         public IQueryable<Content> GetContents()
         {
-            return Get().Include(x => x.ParentContent).Include(x => x.FileModels).Where(x => x.IsDeleted != true);
+            return Get().Include(x => x.FileModels).Where(x => x.IsDeleted != true);
         }
     }
 }

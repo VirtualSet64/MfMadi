@@ -1,5 +1,6 @@
 ﻿using DomainService.Entity;
 using Infrastructure.Repository.Interfaces;
+using MfMadi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,17 +11,19 @@ namespace MfMadi.Controllers
     public class ContentController : Controller
     {
         private readonly IContentRepository _contentRepository;
+        private readonly IGenerateHtmlContent _generateHtmlContent;
 
-        public ContentController(IContentRepository contentRepository)
+        public ContentController(IContentRepository contentRepository, IGenerateHtmlContent generateHtmlContent)
         {
             _contentRepository = contentRepository;
+            _generateHtmlContent = generateHtmlContent;
         }
 
         [Route("GetAllContents")]
         [HttpGet]
         public IActionResult GetAllContents()
         {
-            return Ok(_contentRepository.Get().Include(x => x.ParentContent));
+            return Ok(_contentRepository.Get());
         }
 
         [Route("GetContents")]
@@ -34,7 +37,15 @@ namespace MfMadi.Controllers
         [HttpGet]
         public IActionResult GetContentById(int contentId)
         {
-            return Ok(_contentRepository.GetContents().FirstOrDefault(x=>x.Id == contentId));
+            return Ok(_contentRepository.GetContents().FirstOrDefault(x => x.Id == contentId));
+        }
+
+        [Route("GenerateHtmlContent")]
+        [HttpPost]
+        public IActionResult GenerateHtmlContent(string path, string contentTitle, string contentHtml)
+        {
+            _generateHtmlContent.GenerateHtml(path, contentTitle, contentHtml);
+            return Ok();
         }
 
         [Route("CreateContent")]
@@ -65,6 +76,14 @@ namespace MfMadi.Controllers
             content.IsDeleted = true;
             content.UpdateDate = DateTime.Now;
             await _contentRepository.Update(content);
+            return Ok();
+        }
+
+        [Route("DeleteGeneratedHtmlContent")]
+        [HttpPost]
+        public IActionResult DeleteGeneratedHtmlContent(string path)
+        {
+            _generateHtmlContent.DeleteGeneratedHtmlContent(path);
             return Ok();
         }
     }

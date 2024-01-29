@@ -28,12 +28,7 @@ namespace DomainService.Entity
         public bool IsDeleted { get; set; }
         public DateTime? CreateDate { get; set; } = DateTime.Now;
         public DateTime? UpdateDate { get; set; }
-
-        /// <summary>
-        /// Id родительского объекта
-        /// </summary>
-        public int? ParentContentId { get; set; }
-        public Content? ParentContent { get; set; }
+        public string? Link { get; set; }
         public int? NewsId { get; set; }
         public int? AdvertisingId { get; set; }
     }

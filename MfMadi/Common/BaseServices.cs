@@ -13,6 +13,7 @@ namespace MfMadi.Common
             services.AddSingleton<AuthOptions>();
             services.AddSingleton<IHostEnvironment>(new HostingEnvironment());
             services.AddScoped<IAddFileOnServer, AddFileOnServer>();
+            services.AddScoped<IGenerateHtmlContent, GenerateHtmlContent>();
 
             #region Repositories
             services.AddScoped<IAdvertisingRepository, AdvertisingRepository>();
