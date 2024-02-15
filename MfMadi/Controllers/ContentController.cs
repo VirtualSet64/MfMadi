@@ -2,7 +2,6 @@
 using Infrastructure.Repository.Interfaces;
 using MfMadi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace MfMadi.Controllers
 {
@@ -52,6 +51,9 @@ namespace MfMadi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateContent(Content content)
         {
+            if (content.Link != null)
+                _generateHtmlContent.GenerateHtml(content.Link, content.Title, content.HtmlContent);
+            
             content.CreateDate = DateTime.Now;
             await _contentRepository.Create(content);
             return Ok(content);
@@ -61,6 +63,9 @@ namespace MfMadi.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateContent(Content content)
         {
+            if (content.Link != null)
+                _generateHtmlContent.GenerateHtml(content.Link, content.Title, content.HtmlContent);
+            
             content.UpdateDate = DateTime.Now;
             await _contentRepository.Update(content);
             return Ok();
@@ -73,6 +78,9 @@ namespace MfMadi.Controllers
             var content = await _contentRepository.FindById(id);
             if (content == null)
                 return BadRequest("Контент не найден");
+            if (content.Link != null)
+                _generateHtmlContent.DeleteGeneratedHtmlContent(content.Link);
+            
             content.IsDeleted = true;
             content.UpdateDate = DateTime.Now;
             await _contentRepository.Update(content);
