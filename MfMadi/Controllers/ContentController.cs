@@ -64,8 +64,12 @@ namespace MfMadi.Controllers
         public async Task<IActionResult> UpdateContent(Content content)
         {
             if (content.Link != null)
+            {
+                var oldContent = await _contentRepository.FindById(content.Id);
+                _generateHtmlContent.DeleteGeneratedHtmlContent(oldContent.Link);
                 _generateHtmlContent.GenerateHtml(content.Link, content.Title, content.HtmlContent);
-            
+            }                
+
             content.UpdateDate = DateTime.Now;
             await _contentRepository.Update(content);
             return Ok();
@@ -80,7 +84,7 @@ namespace MfMadi.Controllers
                 return BadRequest("Контент не найден");
             if (content.Link != null)
                 _generateHtmlContent.DeleteGeneratedHtmlContent(content.Link);
-            
+
             content.IsDeleted = true;
             content.UpdateDate = DateTime.Now;
             await _contentRepository.Update(content);
