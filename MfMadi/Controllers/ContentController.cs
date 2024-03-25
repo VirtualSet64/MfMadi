@@ -69,7 +69,7 @@ namespace MfMadi.Controllers
         {
             if (content.Link != null)
             {
-                var oldContent = await _contentRepository.FindById(content.Id);
+                var oldContent = _contentRepository.Get().FirstOrDefault(x=>x.Id == content.Id);
                 _generateHtmlContent.DeleteGeneratedHtmlContent(oldContent.Link);
                 _generateHtmlContent.GenerateHtml(content.Link, content.Title, content.HtmlContent);
             }                
