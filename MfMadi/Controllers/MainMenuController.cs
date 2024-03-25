@@ -1,5 +1,6 @@
 ﻿using DomainService.Entity;
 using Infrastructure.Repository.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MfMadi.Controllers
@@ -36,6 +37,7 @@ namespace MfMadi.Controllers
             return Ok(_mainMenuRepository.GetMainMenuById(mainMenuId));
         }
 
+        [Authorize]
         [Route("CreateMainMenu")]
         [HttpPost]
         public async Task<IActionResult> CreateMainMenu(MainMenu mainMenu)
@@ -45,6 +47,7 @@ namespace MfMadi.Controllers
             return Ok();
         }
 
+        [Authorize]
         [Route("UpdateMainMenu")]
         [HttpPost]
         public async Task<IActionResult> UpdateMainMenu(MainMenu mainMenu)
@@ -54,6 +57,7 @@ namespace MfMadi.Controllers
             return Ok();
         }
 
+        [Authorize]
         [Route("DeleteMainMenu")]
         [HttpPost]
         public async Task<IActionResult> DeleteMainMenu(int id)

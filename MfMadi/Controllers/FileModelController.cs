@@ -1,10 +1,12 @@
 ﻿using DomainService.Entity;
 using Infrastructure.Repository.Interfaces;
 using MfMadi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MfMadi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class FileModelController : Controller

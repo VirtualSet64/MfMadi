@@ -1,11 +1,13 @@
 ﻿using DomainService.Dto.Account;
 using DomainService.Entity;
 using Infrastructure.Repository.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace MfMadi.Controllers
 {
+    [Authorize(Roles = "admin")]
     [ApiController]
     [Route("[controller]")]
     public class EmployeeController : Controller

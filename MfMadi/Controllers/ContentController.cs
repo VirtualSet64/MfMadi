@@ -1,6 +1,7 @@
 ﻿using DomainService.Entity;
 using Infrastructure.Repository.Interfaces;
 using MfMadi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MfMadi.Controllers
@@ -39,6 +40,7 @@ namespace MfMadi.Controllers
             return Ok(_contentRepository.GetContents().FirstOrDefault(x => x.Id == contentId));
         }
 
+        [Authorize]
         [Route("GenerateHtmlContent")]
         [HttpPost]
         public IActionResult GenerateHtmlContent(string path, string contentTitle, string contentHtml)
@@ -47,6 +49,7 @@ namespace MfMadi.Controllers
             return Ok();
         }
 
+        [Authorize]
         [Route("CreateContent")]
         [HttpPost]
         public async Task<IActionResult> CreateContent(Content content)
@@ -59,6 +62,7 @@ namespace MfMadi.Controllers
             return Ok(content);
         }
 
+        [Authorize]
         [Route("UpdateContent")]
         [HttpPost]
         public async Task<IActionResult> UpdateContent(Content content)
@@ -75,6 +79,7 @@ namespace MfMadi.Controllers
             return Ok();
         }
 
+        [Authorize]
         [Route("DeleteContent")]
         [HttpPost]
         public async Task<IActionResult> DeleteContent(int id)
@@ -91,6 +96,7 @@ namespace MfMadi.Controllers
             return Ok();
         }
 
+        [Authorize]
         [Route("DeleteGeneratedHtmlContent")]
         [HttpPost]
         public IActionResult DeleteGeneratedHtmlContent(string path)

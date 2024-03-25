@@ -1,6 +1,7 @@
 ﻿using DomainService.Entity;
 using Infrastructure.Repository.Interfaces;
 using MfMadi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MfMadi.Controllers
@@ -46,6 +47,7 @@ namespace MfMadi.Controllers
         /// <param name="link"></param>
         /// <param name="formFile"></param>
         /// <returns></returns>
+        [Authorize]
         [Route("CreatePartner")]
         [HttpPost]
         public async Task<IActionResult> CreatePartner(string name, string link, IFormFile? formFile)
@@ -64,6 +66,7 @@ namespace MfMadi.Controllers
             return Ok();
         }
 
+        [Authorize]
         [Route("UpdatePartner")]
         [HttpPost]
         public async Task<IActionResult> UpdatePartner(int partnerId, string name, string link, IFormFile? formFile)
@@ -80,6 +83,7 @@ namespace MfMadi.Controllers
             return Ok();
         }
 
+        [Authorize]
         [Route("DeletePartner")]
         [HttpPost]
         public async Task<IActionResult> DeletePartner(int id)

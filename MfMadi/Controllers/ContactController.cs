@@ -1,5 +1,6 @@
 ﻿using DomainService.Entity;
 using Infrastructure.Repository.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MfMadi.Controllers
@@ -43,6 +44,7 @@ namespace MfMadi.Controllers
             return Ok(_contactRepository.GetContacts().FirstOrDefault(x => x.Id == contactId));
         }
 
+        [Authorize]
         [Route("CreateContact")]
         [HttpPost]
         public async Task<IActionResult> CreateContact(Contact contact)
@@ -52,6 +54,7 @@ namespace MfMadi.Controllers
             return Ok();
         }
 
+        [Authorize]
         [Route("UpdateContact")]
         [HttpPost]
         public async Task<IActionResult> UpdateContact(Contact contact)
@@ -61,6 +64,7 @@ namespace MfMadi.Controllers
             return Ok();
         }
 
+        [Authorize]
         [Route("DeleteContact")]
         [HttpPost]
         public async Task<IActionResult> DeleteContact(int id)

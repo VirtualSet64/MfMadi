@@ -1,5 +1,6 @@
 ﻿using DomainService.Entity;
 using Infrastructure.Repository.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MfMadi.Controllers
@@ -36,6 +37,7 @@ namespace MfMadi.Controllers
             return Ok(_newsRepository.GetNewsById(newsId));
         }
 
+        [Authorize]
         [Route("CreateNews")]
         [HttpPost]
         public async Task<IActionResult> CreateNews(News news)
@@ -45,6 +47,7 @@ namespace MfMadi.Controllers
             return Ok(news);
         }
 
+        [Authorize]
         [Route("UpdateNews")]
         [HttpPost]
         public async Task<IActionResult> UpdateNews(News news)
@@ -54,6 +57,7 @@ namespace MfMadi.Controllers
             return Ok(news);
         }
 
+        [Authorize]
         [Route("DeleteNews")]
         [HttpPost]
         public async Task<IActionResult> DeleteNews(int id)

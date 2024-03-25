@@ -1,6 +1,7 @@
 ﻿using DomainService.Entity;
 using Infrastructure.Repository.Interfaces;
 using MfMadi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MfMadi.Controllers
@@ -80,6 +81,7 @@ namespace MfMadi.Controllers
         /// <param name="advertisingId"></param>
         /// <param name="formFile"></param>
         /// <returns></returns>
+        [Authorize]
         [Route("AddFileToAdvertising")]
         [HttpPost]
         public async Task<IActionResult> AddFileToAdvertising(int advertisingId, IFormFile formFile)
@@ -98,6 +100,7 @@ namespace MfMadi.Controllers
             return Ok();
         }
 
+        [Authorize]
         [Route("CreateAdvertising")]
         [HttpPost]
         public async Task<IActionResult> CreateAdvertising(Advertising advertising)
@@ -107,6 +110,7 @@ namespace MfMadi.Controllers
             return Ok(advertising);
         }
 
+        [Authorize]
         [Route("UpdateAdvertising")]
         [HttpPost]
         public async Task<IActionResult> UpdateAdvertising(Advertising advertising)
@@ -116,6 +120,7 @@ namespace MfMadi.Controllers
             return Ok();
         }
 
+        [Authorize]
         [Route("DeleteAdvertising")]
         [HttpPost]
         public async Task<IActionResult> DeleteAdvertising(int id)
