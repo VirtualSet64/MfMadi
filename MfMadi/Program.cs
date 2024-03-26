@@ -149,6 +149,7 @@ app.UseStaticFiles();
 
 app.UseCors("MyAllowCredentialsPolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
