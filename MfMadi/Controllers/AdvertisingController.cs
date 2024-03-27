@@ -12,12 +12,12 @@ namespace MfMadi.Controllers
     {
         private readonly IAdvertisingRepository _advertisingRepository;
         private readonly IConfiguration _configuration;
-        private readonly IAddFileOnServer _addFileOnServer;
+        private readonly IInteractionFileOnServer _interactionFileOnServer;
 
-        public AdvertisingController(IAdvertisingRepository advertisingRepository, IConfiguration configuration, IAddFileOnServer addFileOnServer)
+        public AdvertisingController(IAdvertisingRepository advertisingRepository, IConfiguration configuration, IInteractionFileOnServer interactionFileOnServer)
         {
             _advertisingRepository = advertisingRepository;
-            _addFileOnServer = addFileOnServer;
+            _interactionFileOnServer = interactionFileOnServer;
             _configuration = configuration;
         }
 
@@ -92,7 +92,7 @@ namespace MfMadi.Controllers
             
             if (formFile != null)
             {
-                await _addFileOnServer.CreateFile(formFile);
+                await _interactionFileOnServer.CreateFile(formFile);
                 advertising.AvatarFileName = formFile.FileName;
             }
             advertising.UpdateDate = DateTime.Now; 

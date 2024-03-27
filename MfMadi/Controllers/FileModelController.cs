@@ -12,12 +12,20 @@ namespace MfMadi.Controllers
     public class FileModelController : Controller
     {
         private readonly IFileModelRepository _fileModelRepository;
-        private readonly IAddFileOnServer _addFileOnServer;
+        private readonly IInteractionFileOnServer _interactionFileOnServer;
 
-        public FileModelController(IFileModelRepository fileModelRepository, IAddFileOnServer addFileOnServer)
+        public FileModelController(IFileModelRepository fileModelRepository, IInteractionFileOnServer interactionFileOnServer)
         {
             _fileModelRepository = fileModelRepository;
-            _addFileOnServer = addFileOnServer;
+            _interactionFileOnServer = interactionFileOnServer;
+        }
+
+        [Route("GetDeletedFileModels")]
+        [HttpGet]
+        public IActionResult GetDeletedFileModels()
+        {
+            var fileModels = _fileModelRepository.Get().Where(x => x.IsDeleted == true);
+            return Ok(fileModels);
         }
 
         [Route("CreateFileModel")]
@@ -29,7 +37,7 @@ namespace MfMadi.Controllers
                 List<FileModel> fileModels = new();
                 foreach (var file in formFiles)
                 {
-                    await _addFileOnServer.CreateFile(file);
+                    await _interactionFileOnServer.CreateFile(file);
                     fileModels.Add(new FileModel()
                     {
                         ContentId = contentId,
@@ -52,6 +60,21 @@ namespace MfMadi.Controllers
             file.IsDeleted = true;
             file.UpdateDate = DateTime.Now;
             await _fileModelRepository.Update(file);
+            return Ok();
+        }
+
+        [Route("DeleteFileOnServer")]
+        [HttpPost]
+        public async Task<IActionResult> DeleteFileOnServer(int id)
+        {
+            var file = _fileModelRepository.Get().FirstOrDefault(x => x.Id == id);
+            if (file == null)
+                return BadRequest("Файл не найден");
+
+            file.IsDeleted = true;
+            file.UpdateDate = DateTime.Now;            
+            _interactionFileOnServer.DeleteFile(file.Name);
+            await _fileModelRepository.Remove(file);
             return Ok();
         }
     }

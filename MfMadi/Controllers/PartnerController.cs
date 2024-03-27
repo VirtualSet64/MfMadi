@@ -11,12 +11,12 @@ namespace MfMadi.Controllers
     public class PartnerController : Controller
     {
         private readonly IPartnerRepository _partnerRepository;
-        private readonly IAddFileOnServer _addFileOnServer;
+        private readonly IInteractionFileOnServer _interactionFileOnServer;
 
-        public PartnerController(IPartnerRepository partnerRepository, IAddFileOnServer addFileOnServer)
+        public PartnerController(IPartnerRepository partnerRepository, IInteractionFileOnServer interactionFileOnServer)
         {
             _partnerRepository = partnerRepository;
-            _addFileOnServer = addFileOnServer;
+            _interactionFileOnServer = interactionFileOnServer;
         }
 
         [Route("GetAllPartners")]
@@ -59,7 +59,7 @@ namespace MfMadi.Controllers
             };
             if (formFile != null)
             {
-                await _addFileOnServer.CreateFile(formFile);
+                await _interactionFileOnServer.CreateFile(formFile);
                 partner.ImageFileName = formFile.FileName;
             }
             await _partnerRepository.Create(partner);
@@ -76,7 +76,7 @@ namespace MfMadi.Controllers
             partner.Link = link;
             if (formFile != null)
             {
-                await _addFileOnServer.CreateFile(formFile);
+                await _interactionFileOnServer.CreateFile(formFile);
                 partner.ImageFileName = formFile.FileName;
             }
             await _partnerRepository.Update(partner);

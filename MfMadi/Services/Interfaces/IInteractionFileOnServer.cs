@@ -1,7 +1,8 @@
 ﻿namespace MfMadi.Services.Interfaces
 {
-    public interface IAddFileOnServer
+    public interface IInteractionFileOnServer
     {
         public Task<string> CreateFile(IFormFile uploadedFile);
+        public void DeleteFile(string fileName);
     }
 }

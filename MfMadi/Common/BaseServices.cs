@@ -11,8 +11,7 @@ namespace MfMadi.Common
         public static void AddDBService(this IServiceCollection services)
         {
             services.AddSingleton<AuthOptions>();
-            services.AddSingleton<IHostEnvironment>(new HostingEnvironment());
-            services.AddScoped<IAddFileOnServer, AddFileOnServer>();
+            services.AddScoped<IInteractionFileOnServer, InteractionFileOnServer>();
             services.AddScoped<IGenerateHtmlContent, GenerateHtmlContent>();
 
             #region Repositories

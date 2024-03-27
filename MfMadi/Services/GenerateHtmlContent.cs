@@ -7,7 +7,6 @@ namespace MfMadi.Services
     {
         private readonly IMainMenuRepository _mainMenuRepository;
         private readonly IContactRepository _contactRepository;
-        private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private string TemplateHtmlFilePathForTable { get; set; }
         private string TableHtmlFilePath { get; set; }
@@ -16,7 +15,6 @@ namespace MfMadi.Services
         {
             _mainMenuRepository = mainMenuRepository;
             _contactRepository = contactRepository;
-            _configuration = configuration;
             TemplateHtmlFilePathForTable = configuration["TemplateHtmlFilePathForTable"];
             TableHtmlFilePath = configuration["TableHtmlFilePath"];
             _webHostEnvironment = webHostEnvironment;
@@ -140,7 +138,7 @@ namespace MfMadi.Services
             templateHtmlContent = templateHtmlContent.Replace("<!-- Контент -->", contentHtml);
 
             //Генерация html файла
-            string pathToFileDirectory = _webHostEnvironment.WebRootPath + _webHostEnvironment.ContentRootPath + path;
+            string pathToFileDirectory = _webHostEnvironment.ContentRootPath + path;
             string pathToFile = pathToFileDirectory + TableHtmlFilePath;
 
             if (!File.Exists(pathToFile))
@@ -157,7 +155,7 @@ namespace MfMadi.Services
         {
             path = path[path.Length - 1].Equals('/') ? path : path + "/";
 
-            string pathToFileDirectory = _webHostEnvironment.WebRootPath + _webHostEnvironment.ContentRootPath + path;
+            string pathToFileDirectory = _webHostEnvironment.ContentRootPath + path;
             Directory.Delete(pathToFileDirectory, true);
         }
     }
