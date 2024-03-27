@@ -15,7 +15,7 @@ namespace MfMadi.Services
         public async Task<string> CreateFile(IFormFile uploadedFile)
         {
             string path = FileFolderPath + uploadedFile.FileName;
-            using (var fileStream = new FileStream(_appEnvironment.ContentRootPath + path, FileMode.Create))
+            using (var fileStream = new FileStream(path, FileMode.Create))
                 await uploadedFile.CopyToAsync(fileStream);
             return path;
         }
